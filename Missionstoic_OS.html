@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MissionStoic OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --parchment: #f2ead8;
+    --parchment-dark: #e8dcc4;
+    --leather: #3a2a1a;
+    --leather-mid: #5c3d20;
+    --leather-light: #8b5e3c;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --iron: #7a8a99;
+    --text-dark: #2a1a0a;
+    --text-mid: #4a3520;
+    --green-check: #4a7c59;
+    --score-red: #c04a2a;
+  }
+
+  body {
+    background: var(--leather);
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(90,60,30,0.6) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(20,10,5,0.8) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%233a2a1a'/%3E%3Crect x='0' y='0' width='1' height='1' fill='%23453020' opacity='0.4'/%3E%3Crect x='2' y='2' width='1' height='1' fill='%23453020' opacity='0.3'/%3E%3C/svg%3E");
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 12px 40px;
+    font-family: 'Crimson Pro', Georgia, serif;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 18px 0 14px;
+    position: relative;
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .sword-icon {
+    color: var(--gold);
+    font-size: 22px;
+    opacity: 0.9;
+  }
+  .header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--parchment);
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5), 0 0 20px rgba(201,168,76,0.2);
+  }
+  .header-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .header-divider {
+    margin: 10px auto 0;
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+
+  /* CARD */
+  .card {
+    background: var(--parchment);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    border-radius: 6px;
+    border: 1px solid rgba(139,94,60,0.4);
+    box-shadow:
+      0 4px 20px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.3),
+      inset 0 -1px 0 rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .card-inner {
+    padding: 14px 16px;
+  }
+
+  /* HERO CARD */
+  .hero-card .card-inner {
+    text-align: center;
+    padding: 18px 20px 16px;
+  }
+  .hero-tagline {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .hero-sub {
+    font-size: 13px;
+    color: var(--text-mid);
+    font-style: italic;
+    margin-bottom: 14px;
+    font-family: 'IM Fell English', serif;
+  }
+  .btn-start {
+    display: inline-block;
+    width: 100%;
+    padding: 11px 24px;
+    background: linear-gradient(180deg, #e8dcc4 0%, #d4c5a0 100%);
+    border: 1px solid rgba(139,94,60,0.5);
+    border-radius: 4px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .btn-start:hover {
+    background: linear-gradient(180deg, #f0e6cc 0%, #dccba8 100%);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.5);
+    transform: translateY(-1px);
+  }
+  .btn-start:active { transform: translateY(0); }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px 10px;
+    border-bottom: 1px solid rgba(139,94,60,0.2);
+  }
+  .section-header .icon {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--leather-mid);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--leather-mid);
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+  .dots {
+    color: var(--leather-light);
+    font-size: 16px;
+    letter-spacing: 2px;
+    line-height: 1;
+  }
+
+  /* ACTIONS */
+  .actions-body {
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .actions-left { }
+  .action-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+    font-size: 14px;
+    color: var(--text-dark);
+  }
+  .action-item:last-child { margin-bottom: 0; }
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--leather-mid);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--green-check);
+    background: rgba(255,255,255,0.4);
+    flex-shrink: 0;
+  }
+  .check-box.checked { background: rgba(74,124,89,0.1); border-color: var(--green-check); }
+  .action-label { font-family: 'Crimson Pro', serif; font-size: 15px; }
+  .check-mark { color: var(--green-check); font-size: 13px; margin-left: 2px; }
+  .clock-icon { color: var(--leather-light); font-size: 12px; }
+
+  .actions-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+  .score-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--text-mid);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+  .score-number {
+    font-family: 'Cinzel', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .badge {
+    font-size: 12px;
+    color: var(--text-dark);
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .complete-count {
+    font-size: 12px;
+    color: var(--green-check);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .actions-footer {
+    padding: 6px 16px 12px;
+    font-size: 13px;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Crimson Pro', serif;
+  }
+
+  /* EVENING REVIEW */
+  .review-body { padding: 12px 16px 14px; }
+  .review-input {
+    width: 100%;
+    padding: 9px 12px;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(139,94,60,0.3);
+    border-radius: 4px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    color: var(--text-mid);
+    margin-bottom: 8px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .review-input:focus {
+    border-color: var(--leather-mid);
+    background: rgba(255,255,255,0.7);
+  }
+  .review-input::placeholder { color: var(--leather-light); opacity: 0.7; font-style: italic; }
+  .review-footer {
+    margin-top: 4px;
+    font-size: 13.5px;
+    color: var(--text-mid);
+    font-family: 'IM Fell English', serif;
+  }
+  .review-footer strong { font-weight: 600; color: var(--text-dark); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--parchment-dark);
+    background-image: linear-gradient(180deg, var(--parchment-dark) 0%, #d8c8a8 100%);
+    border-radius: 6px;
+    border: 1px solid rgba(139,94,60,0.4);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    overflow: hidden;
+  }
+  .stat {
+    padding: 13px 8px;
+    text-align: center;
+    border-right: 1px solid rgba(139,94,60,0.25);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9.5px;
+    color: var(--text-mid);
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .stat-value {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">
+      <span class="sword-icon">⚔</span>
+      <h1>MissionStoic OS</h1>
+    </div>
+    <div class="header-sub">Daily Command Center</div>
+    <div class="header-divider"></div>
+  </div>
+
+  <!-- HERO CARD -->
+  <div class="card hero-card">
+    <div class="card-inner">
+      <div class="hero-tagline">Execute the day. Win the day.</div>
+      <div class="hero-sub">Click 'Start Today' to begin.</div>
+      <button class="btn-start">Start Today</button>
+    </div>
+  </div>
+
+  <!-- TODAY'S ACTIONS -->
+  <div class="card">
+    <div class="section-header">
+      <div class="icon">✓</div>
+      <span class="section-title">Today's Actions</span>
+      <span class="dots">···</span>
+    </div>
+    <div class="actions-body">
+      <div class="actions-left">
+        <div class="action-item">
+          <div class="check-box checked">✓</div>
+          <span class="action-label">Body</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="action-item">
+          <div class="check-box checked">✓</div>
+          <span class="action-label">Mind</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="action-item">
+          <div class="check-box checked">✓</div>
+          <span class="action-label">Spirit</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="action-item">
+          <div class="check-box checked">✓</div>
+          <span class="action-label">Wealth</span>
+          <span class="check-mark">✓</span>
+        </div>
+        <div class="action-item">
+          <div class="check-box checked">✓</div>
+          <span class="action-label">No Slip</span>
+          <span class="clock-icon">⏱</span>
+        </div>
+      </div>
+      <div class="actions-right">
+        <div class="score-label">Today's Score</div>
+        <div class="score-number">80%</div>
+        <div class="badge">🎉 Iron Day Achieved 🔥</div>
+        <div class="complete-count">✓ 5 of 5 complete</div>
+      </div>
+    </div>
+    <div class="actions-footer">
+      <span>☑</span> 5 of 5 complete
+    </div>
+  </div>
+
+  <!-- EVENING REVIEW -->
+  <div class="card">
+    <div class="section-header">
+      <div class="icon" style="border-radius:3px;">≡</div>
+      <span class="section-title">Evening Review</span>
+    </div>
+    <div class="review-body">
+      <input class="review-input" type="text" placeholder="Biggest Win" />
+      <input class="review-input" type="text" placeholder="Lesson Learned" />
+      <input class="review-input" type="text" placeholder="Tomorrow Focus" />
+      <div class="review-footer">✨ <strong>Awesome.</strong> You completed today's actions.</div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-label">🔥 Current Streak</div>
+      <div class="stat-value">3 Days</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">📅 7-Day Score</div>
+      <div class="stat-value">76%</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">🏆 Iron Days This</div>
+      <div class="stat-value">4 Days</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
